@@ -3,11 +3,16 @@ A utility just do one thing: converts [TOML] file into [JSON]
 
 ## How to Install
 ### Build with PKGBUILD (Arch Linux)
-Do this in your terminal:
+Make a new temporary folder and [download PKGBUILD](https://raw.githubusercontent.com/xnuk/toml-bin/master/PKGBUILD) into there, and run `makepkg -si` in your terminal.
 
 ```sh
-git clone https://github.com/xnuk/toml-bin
-cd toml-bin
+# Make a new temporary folder. For example:
+cd $(mktemp -d)
+
+# Download PKGBUILD
+curl --get https://raw.githubusercontent.com/xnuk/toml-bin/master/PKGBUILD > PKGBUILD
+
+# Build & Install
 makepkg -si
 ```
 
