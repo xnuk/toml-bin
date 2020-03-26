@@ -1,0 +1,13 @@
+[package]
+name = "toml-bin"
+version = "0.1.0"
+authors = ["Xnuk Shuman <admin@xnu.kr>"]
+edition = "2018"
+
+[dependencies]
+toml = "^0.5.6"
+serde_json = "^1.0.48"
+
+[[bin]]
+name = "toml"
+path = "main.rs"
