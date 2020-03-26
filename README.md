@@ -16,6 +16,12 @@ curl --get https://raw.githubusercontent.com/xnuk/toml-bin/master/PKGBUILD > PKG
 makepkg -si
 ```
 
+To uninstall it, do:
+
+```sh
+pacman -Rsc toml-bin-git
+```
+
 ### Build from source
 After [installing Rust][Rust] and do this in your terminal:
 
