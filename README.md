@@ -1,5 +1,7 @@
 # toml-bin
-A utility just do one thing: converts [TOML] file into [JSON]
+A utility just do two things:
+- converts [TOML] file into [JSON]
+- or vice versa.
 
 ## How to Install
 ### Build with PKGBUILD (Arch Linux)
