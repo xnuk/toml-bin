@@ -1,5 +1,5 @@
 pkgname=toml-bin-git
-pkgver=0.1.0.r1.4d1a21c
+pkgver=0.2.0.r8.059082f
 pkgrel=1
 pkgdesc='Converts TOML file into JSON'
 arch=('x86_64')
