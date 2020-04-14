@@ -17,21 +17,23 @@ macro_rules! pretty {
 			unwrap(&{
 				$from::de::from_str::<$to::value::Value>($x)
 			})
-		).unwrap()
+		).expect("")
 	}
 }
 
-fn main() -> std::io::Result<()> {
-	let mut buffer = String::new();
+fn run() -> std::io::Result<()> {
+	let mut buf = String::new();
 
-	match args_os().nth(1) {
+	let path = args_os().nth(1).filter(|path| { path != "-" });
+
+	match path {
 		Some(path) => {
-			unwrap(&File::open(path)).read_to_string(&mut buffer)
+			File::open(path)?.read_to_string(&mut buf)
 		},
-		None => stdin().read_to_string(&mut buffer),
+		None => stdin().read_to_string(&mut buf),
 	}?;
 
-	let buf = buffer.trim_start();
+	let buf = buf.trim_start();
 	let is_json = buf.chars().next() == Some('{');
 
 	stdout().write_all(
@@ -42,3 +44,5 @@ fn main() -> std::io::Result<()> {
 		}.as_bytes()
 	)
 }
+
+fn main() { *unwrap(&run()) }
