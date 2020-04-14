@@ -11,28 +11,34 @@ fn unwrap<'a, T, E>(x: &'a Result<T, E>) -> &'a T where E: Display {
 	})
 }
 
+macro_rules! pretty {
+	($from:tt -> $to:tt , $x:expr) => {
+		$to::ser::to_string_pretty(
+			unwrap(&{
+				$from::de::from_str::<$to::value::Value>($x)
+			})
+		).unwrap()
+	}
+}
+
 fn main() -> std::io::Result<()> {
-	let path = args_os().nth(1);
+	let mut buffer = String::new();
 
-	let mut buf = String::new();
-
-	match path {
-		Some(p) => {
-			let a = File::open(p);
-			unwrap(&a).read_to_string(&mut buf)?
+	match args_os().nth(1) {
+		Some(path) => {
+			unwrap(&File::open(path)).read_to_string(&mut buffer)
 		},
-		None => stdin().read_to_string(&mut buf)?,
-	};
+		None => stdin().read_to_string(&mut buffer),
+	}?;
 
-	let is_json = buf.trim_start().chars().next() == Some('{');
+	let buf = buffer.trim_start();
+	let is_json = buf.chars().next() == Some('{');
 
-	let output = if is_json {
-		let a = serde_json::de::from_str::<toml::value::Value>(&buf);
-		toml::ser::to_string_pretty(unwrap(&a)).unwrap()
-	} else {
-		let a = toml::de::from_str::<serde_json::value::Value>(&buf);
-		serde_json::ser::to_string_pretty(unwrap(&a)).unwrap()
-	};
-
-	stdout().write_all(output.as_bytes())
+	stdout().write_all(
+		if is_json {
+			pretty!(serde_json -> toml, &buf)
+		} else {
+			pretty!(toml -> serde_json, &buf)
+		}.as_bytes()
+	)
 }
