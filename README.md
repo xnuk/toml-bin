@@ -5,14 +5,14 @@ A utility just do two things:
 
 ## How to Install
 ### Build with PKGBUILD (Arch Linux)
-Make a new temporary folder and [download PKGBUILD](https://raw.githubusercontent.com/xnuk/toml-bin/master/PKGBUILD) into there, and run `makepkg -si` in your terminal.
+Make a new temporary folder and [download PKGBUILD](https://raw.githubusercontent.com/xnuk/toml-bin/develop/PKGBUILD) into there, and run `makepkg -si` in your terminal.
 
 ```sh
 # Make a new temporary folder. For example:
 cd $(mktemp -d)
 
 # Download PKGBUILD
-curl --get https://raw.githubusercontent.com/xnuk/toml-bin/master/PKGBUILD > PKGBUILD
+curl --get https://raw.githubusercontent.com/xnuk/toml-bin/develop/PKGBUILD > PKGBUILD
 
 # Build & Install
 makepkg -si
