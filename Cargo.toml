@@ -11,3 +11,7 @@ serde_json = "1.0.117"
 [[bin]]
 name = "toml"
 path = "main.rs"
+
+[profile.release]
+strip = true
+lto = true

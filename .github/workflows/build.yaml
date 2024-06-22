@@ -1,0 +1,33 @@
+on:
+  push:
+    branches:
+    - develop
+
+  pull_request:
+    branches:
+    - develop
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          target/
+        key: cargo-${{ runner.os }}-${{ hashFiles('Cargo.lock') }}-r1
+
+    - run: cargo install --locked --path . --root .
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: binaries
+        path: bin/
+        if-no-files-found: error
